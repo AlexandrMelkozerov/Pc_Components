@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Расчет стоймости комплектующих</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">Комплектующие для ПК</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/users}">Пользователи</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/list-components}">Комплектующие</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/list-stores}">Магазины</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/component-cost-form}">Расчет стоймости</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/logout}">Выход</a>
+                </li>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h2>Расчет стоймости комплектующих</h2>
+    <form action="/calculate-component-cost" method="post" th:object="${componentDto}">
+        <label for="manufacturersPrice">Цена от производителя:</label>
+        <input type="number" th:field="*{manufacturersPrice}" class="form-control"><br>
+
+        <label for="logisticsCosts">Затраты на логистику:</label>
+        <input type="number" th:field="*{logisticsCosts}" class="form-control"><br>
+
+        <label for="customDuties">Таможенная пошлина:</label>
+        <input type="number" th:field="*{customDuties}" class="form-control"><br>
+
+        <label for="quantity">Количество:</label>
+        <input type="number" th:field="*{quantity}" class="form-control"><br>
+
+        <button type="submit" class="btn btn-primary">Расчитать</button>
+    </form>
+
+    <div th:if="${totalCost}">
+        <h2>Цена комплектующих</h2>
+        <p>The total cost per component is: ₽<span th:text="${totalCost}"></span></p>
+    </div>
+
+    <a th:href="@{/index}">Назад</a>
+</div>
+</body>
+</html>
